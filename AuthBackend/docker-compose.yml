@@ -1,0 +1,159 @@
+version: '3.4'
+
+services:
+  authapi:
+   image: pocdaprimages.azurecr.io/authapi:dev
+   build:
+     context: .
+     dockerfile: authapi/Dockerfile
+   environment:
+       - ASPNETCORE_ENVIRONMENT=Development
+   ports:
+       - "8089:80"
+   networks:
+       - auth-network
+   restart: always
+
+
+  rabbitmq:
+   image: rabbitmq:3-management-alpine
+   container_name: 'rabbitmq'
+   ports:
+       - 4672:5672
+       - 14672:15672
+       - 11883:1883
+   volumes:
+       # - ./docker-conf/rabbitmq/data/:/var/lib/rabbitmq
+       # - ./docker-conf/rabbitmq/log/:/var/log/rabbitmq
+       - ./docker-conf/rabbitmq/config/rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+       - ./docker-conf/rabbitmq/config/enabled_plugins:/etc/rabbitmq/enabled_plugins
+   networks:
+       - auth-network
+   restart: always 
+
+
+  postgres-db:
+    image: postgres:latest
+    #image: pocdaprimages.azurecr.io/caz-postgres:0.1-dev
+    container_name: postgres-db
+    ports:
+        - 5432:5432
+    environment:
+      POSTGRES_USER: keycloak
+      POSTGRES_PASSWORD: cazbila
+      POSTGRES_DB: keycloak
+    volumes:
+        - postgres-data:/var/lib/postgresql/data
+    networks:
+        - auth-network
+    restart: always 
+
+
+  keycloak:
+    build:
+      context: .
+      dockerfile: keycloak.Dockerfile
+    container_name: keycloak
+    command: start-dev
+    environment:
+      KC_HEALTH_ENABLED: 'true'
+      KC_METRICS_ENABLED: 'true'
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://postgres-db:5432/keycloak
+      KC_DB_USERNAME: keycloak
+      KC_DB_PASSWORD: cazbila
+      KC_HOSTNAME: 192.168.2.88
+      #KC_HOSTNAME: localhost
+      KEYCLOAK_ADMIN: newest
+      KEYCLOAK_ADMIN_PASSWORD: 1Cachapuz!
+    ports:
+      - "8088:8080"
+      - "8087:8443"
+    networks:
+        - auth-network
+    depends_on:
+      - postgres-db   
+
+
+###### Implementações específicas para Cloud ######
+
+  # caz-keycloak:
+  #   image: pocdaprimages.azurecr.io/caz-keycloak:v1
+  #   build:
+  #     context: .
+  #     dockerfile: keycloak.Dockerfile
+  #   container_name: keycloak
+  #   command: start
+  #   environment:
+  #     KC_HEALTH_ENABLED: 'true'
+  #     KC_METRICS_ENABLED: 'true'
+  #     KC_DB: postgres
+  #     KC_DB_URL: jdbc:postgresql://postgres-db:5432/keycloak
+  #     KC_DB_USERNAME: keycloak
+  #     KC_DB_PASSWORD: cazbila
+  #     KC_HOSTNAME: localhost
+  #     KEYCLOAK_ADMIN: admin
+  #     KEYCLOAK_ADMIN_PASSWORD: admin
+  #     KC_HOSTNAME_STRICT: 'false' 
+  #     KC_HOSTNAME_STRICT_HTTPS: 'false'
+  #     KC_HTTP_ENABLED: 'true'
+  #     #KC_PROXY: edge
+  #     #PROXY_ADDRESS_FORWARDING: 'true'
+  #   ports:
+  #     - "8080:8080"
+  #     - "8443:8443"
+  #   networks:
+  #       - auth-network
+  #   depends_on:
+  #     - postgres-db   
+  #   restart: always
+  
+
+  #caz-rabbitmq:
+  #  image: pocdaprimages.azurecr.io/caz-rabbitmq:dev
+  #  container_name: 'caz-rabbitmq'
+  #  ports:    
+  #  - 1883:1883
+  #  - 8883:8883
+  #  - 5672:5672
+  #  - 15672:15672
+  #  - 15675:15675
+  #  - 15674:15674 
+  #  networks:
+  #  - auth-network
+  #  restart: always 
+
+
+  #build-rabbitmq:
+  #  image: pocdaprimages.azurecr.io/caz-rabbitmq:dev
+  #  build:
+  #    context: .
+  #    dockerfile: rabbitmq.Dockerfile
+  #  ports:    
+  #  - 1883:1883
+  #  - 8883:8883
+  #  - 5672:5672
+  #  - 15672:15672
+  #  - 15675:15675
+  #  - 15674:15674 
+
+
+  #build-postgres:
+  #  image: pocdaprimages.azurecr.io/caz-postgres:0.1-dev
+  #  build:
+  #    context: .
+  #    dockerfile: postgres.Dockerfile
+  #  container_name: postgres-db
+  #  ports:
+  #  - 5432:5432
+
+
+
+
+networks:
+  auth-network:
+
+volumes:
+  keycloak-data:
+  postgres-data:
+

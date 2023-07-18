@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33110.190
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "authapi", "authapi\authapi.csproj", "{1DE24DDC-4AF2-49B7-A21B-2B426590EE2E}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{9DF591C3-5201-4B61-B3F4-E5FAA0DAAE81}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{6F4140D2-2C84-45DB-97A6-1CE1C6637FEC}"
+	ProjectSection(SolutionItems) = preProject
+		Keycloak.README.md = Keycloak.README.md
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "imgs", "imgs", "{A9EA2EE5-E573-4F8D-A1FD-49464803127C}"
+	ProjectSection(SolutionItems) = preProject
+		Docs\imgs\resource-association.png = Docs\imgs\resource-association.png
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1DE24DDC-4AF2-49B7-A21B-2B426590EE2E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1DE24DDC-4AF2-49B7-A21B-2B426590EE2E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1DE24DDC-4AF2-49B7-A21B-2B426590EE2E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1DE24DDC-4AF2-49B7-A21B-2B426590EE2E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9DF591C3-5201-4B61-B3F4-E5FAA0DAAE81}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9DF591C3-5201-4B61-B3F4-E5FAA0DAAE81}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9DF591C3-5201-4B61-B3F4-E5FAA0DAAE81}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9DF591C3-5201-4B61-B3F4-E5FAA0DAAE81}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A9EA2EE5-E573-4F8D-A1FD-49464803127C} = {6F4140D2-2C84-45DB-97A6-1CE1C6637FEC}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F96D84BB-C34B-4A4A-B554-F39CA216131A}
+	EndGlobalSection
+EndGlobal
