@@ -19,7 +19,7 @@ EXPOSE 8080 8443
 ENV KC_DB=postgres
 ENV KC_DB_URL=jdbc:postgresql://postgres-db:5432/keycloak
 ENV KC_DB_USERNAME=keycloak
-ENV KC_DB_PASSWORD=cazbila
+ENV KC_DB_PASSWORD=admin
 
 # login
 ENV KEYCLOAK_ADMIN=admin
