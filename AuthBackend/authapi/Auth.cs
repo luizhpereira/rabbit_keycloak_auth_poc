@@ -5,13 +5,10 @@ namespace authapi
 {
     public class Auth
     {
-        //private static readonly string _host = "http://192.168.2.88:8088";
-        private static readonly string _host = "https://cachapuz.westeurope.cloudapp.azure.com/Keycloak";
+        private static readonly string _host = "http://127.0.0.1:8080";
         private static readonly string _realm = "dev";
         private static readonly string _grantType = "password";
-        //private static readonly string _clientId = "gwapi-auth";
         private static readonly string _clientId = "Mobile";
-        //private static readonly string _clientSecret = "qy59ikpqDNi3OtR5Phwh0PJIEmTSqb5F";
         private static readonly string _clientSecret = "2RM5xuf6xa2NSEhwwmD1Q0UdRPIBJ2TA";
 
         public Auth() 
@@ -50,8 +47,8 @@ namespace authapi
             //Obtain JWT
             var requestContent = new FormUrlEncodedContent(new[]
                 {
-                    new KeyValuePair<string, string>("password", "1Cachapuz!"),
-                    new KeyValuePair<string, string>("username", "newest"),
+                    new KeyValuePair<string, string>("password", "<insertPassword>"),
+                    new KeyValuePair<string, string>("username", "<insertUsername>"),
                     new KeyValuePair<string, string>("grant_type", _grantType),
                     new KeyValuePair<string, string>("client_id", "admin-cli")
                 });
